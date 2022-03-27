@@ -9,7 +9,11 @@ const Stack = createStackNavigator<MainParamsList>();
 export const Route = () => {
   return (
     <Stack.Navigator initialRouteName={MainParams.Recipes} screenOptions={{}}>
-      <Stack.Screen name={MainParams.Recipes} component={RecipesScreen} />
+      <Stack.Screen
+        name={MainParams.Recipes}
+        component={RecipesScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name={MainParams.Recipe} component={RecipeScreen} />
     </Stack.Navigator>
   );

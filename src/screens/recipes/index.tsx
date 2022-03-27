@@ -1,10 +1,10 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, ListRenderItem, View} from 'react-native';
+import {ActivityIndicator, SafeAreaView} from 'react-native';
 
 import {useGetRecipesQuery} from '../../redux/services/recipes/get-recipes';
-import {Recipe} from '../../redux/services';
-import {PressableScaleCard, RecipeCard} from '../../shared/ui';
 import {MainNavigation, MainParams} from '../../navigation/route/interface';
+
+import {RecipesModule} from './recipe-module';
 import {styles} from './style';
 
 interface RecipesScreenProps {
@@ -18,7 +18,7 @@ export const RecipesScreen: React.FC<RecipesScreenProps> = ({navigation}) => {
     return <ActivityIndicator style={styles.loaderStyle} />;
   }
 
-  if (!data?.recipes) {
+  if (!data) {
     return null;
   }
 
@@ -26,23 +26,9 @@ export const RecipesScreen: React.FC<RecipesScreenProps> = ({navigation}) => {
     navigation.navigate(MainParams.Recipe, {uuid});
   };
 
-  const renderItem: ListRenderItem<Recipe> = ({item}) => {
-    const onPress = () => onRecipePress(item.uuid);
-    return (
-      <PressableScaleCard onPress={onPress}>
-        <RecipeCard recipe={item} />
-      </PressableScaleCard>
-    );
-  };
-
   return (
-    <View style={styles.container}>
-      <FlatList
-        contentContainerStyle={styles.flatListContainer}
-        data={data.recipes}
-        keyExtractor={item => item.uuid}
-        renderItem={renderItem}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <RecipesModule data={data.recipes} onRecipePress={onRecipePress} />
+    </SafeAreaView>
   );
 };

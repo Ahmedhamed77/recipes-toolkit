@@ -1,9 +1,8 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {},
-  flatListContainer: {
-    paddingHorizontal: 16,
+  container: {
+    flex: 1,
   },
   loaderStyle: {
     flex: 1,
