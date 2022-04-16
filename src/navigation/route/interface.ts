@@ -9,7 +9,7 @@ export enum MainParams {
 
 export type MainParamsList = {
   [MainParams.Recipes]: NO_PARAMS;
-  [MainParams.Recipe]: {uuid: string};
+  [MainParams.Recipe]: {uuid?: string};
 };
 
 export type MainNavigation = StackNavigationProp<MainParamsList, MainParams>;

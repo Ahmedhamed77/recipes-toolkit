@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {styles} from './style';
-import {Text, View} from 'react-native';
+import {Alert, NativeModules, Platform, Text, View} from 'react-native';
 import {
   MainNavigation,
   MainParams,
   MainParamsList,
 } from '../../navigation/route/interface';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useIsFocused} from '@react-navigation/native';
+const {ScreenCaptureModule} = NativeModules;
 
 interface RecipeScreenProps {
   navigation: MainNavigation;
@@ -18,11 +19,21 @@ export const RecipeScreen: React.FC<RecipeScreenProps> = ({
   navigation,
   route,
 }) => {
-  const {uuid} = route.params;
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if ((Platform.OS = 'android')) {
+      console.log('we');
+      ScreenCaptureModule.allowScreenCapture();
+    }
+    return () => {};
+  }, [isFocused]);
+
+  // const {uuid} = route.params;
   return (
     <View style={styles.container}>
       <Text>RecipeScreen</Text>
-      <Text>{uuid}</Text>
+      {/* <Text>{uuid}</Text> */}
     </View>
   );
 };

@@ -1,6 +1,8 @@
 package com.recipe_toolkit;
 
+import android.app.Activity;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -10,15 +12,15 @@ import com.facebook.react.bridge.ReactMethod;
 import java.util.Map;
 import java.util.HashMap;
 
-public class CalendarModule extends ReactContextBaseJavaModule {
-    CalendarModule(ReactApplicationContext context) {
+public class ScreenCaptureModule extends ReactContextBaseJavaModule {
+    ScreenCaptureModule(ReactApplicationContext context) {
         super(context);
     }
 
 
     @Override
     public String getName() {
-        return "CalendarModule";
+        return "ScreenCaptureModule";
     }
 
     @ReactMethod
@@ -28,5 +30,39 @@ public class CalendarModule extends ReactContextBaseJavaModule {
     }
 
 
+    @ReactMethod
+    public void preventScreenCapture() {
+        final Activity activity = getCurrentActivity();
+        try{
+
+            if (activity != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                    }
+                });
+            }
+
+        }catch (Exception e){}
+
+    }
+    @ReactMethod
+    public void allowScreenCapture() {
+        final Activity activity = getCurrentActivity();
+
+        try {
+            if (activity != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                    }
+                });
+            }
+        }catch (Exception e){
+
+        }
+    }
 
 }
